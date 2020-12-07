@@ -79,7 +79,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
 
     refreshWorldBossesList();
-
+/*
+    List<Widget> list = [Text('Current Boss',)];
+    list.add(buildBossList(currentList));
+    list.add(Text('Next Boss',));
+    list.add(buildBossList(nextList));
+*/
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -105,18 +110,14 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Current Boss',
-            ),
-            // TODO: current boss list
+          children:
+          [
+            Text('Current Boss',),
             buildBossList(currentList),
-            Text(
-              'Next Boss',
-            ),
-            // TODO: next boss list
-            buildBossList(nextList),
-          ],
+            Text('Next Boss',),
+            buildBossList(nextList)
+
+        ],
         ),
 
 
@@ -124,6 +125,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildBossList(List<WorldBossInfo> bossInfos) {
+
+    List<Widget> rows = new List<Widget>();
+
+    for( int i = 0; i < bossInfos.length; i++ ) {
+      rows.add(buildListRow(bossInfos[i]));
+    } // end for
+
+    return ListView(children: rows,);
 
     return ListView.builder(
         padding: EdgeInsets.all(16.0),
