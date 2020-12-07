@@ -55,6 +55,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  List<WorldBossInfo> currentList;
+  List<WorldBossInfo> nextList;
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -74,6 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    refreshWorldBossesList();
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -104,20 +110,16 @@ class _MyHomePageState extends State<MyHomePage> {
               'Current Boss',
             ),
             // TODO: current boss list
-            buildBossList(null),
+            buildBossList(currentList),
             Text(
               'Next Boss',
             ),
             // TODO: next boss list
-            buildBossList(null),
+            buildBossList(nextList),
           ],
         ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+
     );
   }
 
@@ -147,9 +149,47 @@ class _MyHomePageState extends State<MyHomePage> {
       title:
       Text(bossInfo.bossName),
       subtitle:
-      Text("${bossInfo.bossMap} ${bossInfo.bossLevel}"),
+      Text("${bossInfo.bossMap}  Map Level: ${bossInfo.bossLevel}"),
 
     );
   }
+
+  refreshWorldBossesList() {
+
+    if( currentList == null ) currentList = new List<WorldBossInfo>();
+    else currentList.clear();
+
+    if( nextList == null ) nextList = new List<WorldBossInfo>();
+    else nextList.clear();
+
+
+    final index = WorldBossStaticData.getIndexByNow();
+
+    final currentIndexList = WorldBossStaticData.worldBossListTime[index];
+
+    currentList.add( WorldBossStaticData.worldBossDataList[currentIndexList[0]] );
+    if( currentIndexList.length > 1 ) {
+      currentList.add( WorldBossStaticData.worldBossDataList[currentIndexList[1]] );
+    } // end if
+
+    for( var i = index + 1; i < WorldBossStaticData.worldBossListTime.length; i++ ) {
+      final tmp = WorldBossStaticData.worldBossListTime[i];
+      nextList.add( WorldBossStaticData.worldBossDataList[tmp[0]] );
+      if( tmp.length > 1 ) {
+        nextList.add( WorldBossStaticData.worldBossDataList[tmp[1]] );
+      } // end if
+    } // end for
+
+    for( var i = 0; i < index; i++ ) {
+      final tmp = WorldBossStaticData.worldBossListTime[i];
+      nextList.add( WorldBossStaticData.worldBossDataList[tmp[0]] );
+      if( tmp.length > 1 ) {
+        nextList.add( WorldBossStaticData.worldBossDataList[tmp[1]] );
+      } // end if
+    } // end for
+
+
+
+  } // end method refreshWorldBossesList
 
 }

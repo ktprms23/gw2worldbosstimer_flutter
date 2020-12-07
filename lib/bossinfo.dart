@@ -6,8 +6,9 @@ class WorldBossInfo {
   final String bossMap;
   final String bossLevel;
   final int bossIconID;
+  final bool hardCore;
 
-  WorldBossInfo(this.bossName, this.bossMap, this.bossLevel, this.bossIconID );
+  WorldBossInfo(this.bossName, this.bossMap, this.bossLevel, this.bossIconID, this.hardCore );
 
 }
 
@@ -32,119 +33,131 @@ class WorldBossInfo {
 class WorldBossStaticData {
 
   static final List<WorldBossInfo> worldBossDataList = [
-    WorldBossInfo('Taidha Covington', 'Bloodtide Coast', '45 ~ 55', 0),
-    WorldBossInfo('Tequatl', 'Sparkfly Fen', '55 ~ 65', 1),
-    WorldBossInfo('Svanir Shaman', 'Wayfarer Foothills', '1 ~ 15', 2),
-    WorldBossInfo('Megadestroyer', 'Bloodtide Coast', '60 ~ 70', 3),
-    WorldBossInfo('Fire Elemental', 'Mount Maelstrom', '1 ~ 15', 4),
-    WorldBossInfo('Shatterer', 'Blazeridge Steppes', '45 ~ 55', 5),
-    WorldBossInfo('Evolved Jungle Wurm', 'Bloodtide Coast', '45 ~ 55', 6),
-    WorldBossInfo('Jungle Wurm', 'Caledon Forest', '1 ~ 15', 7),
-    WorldBossInfo('Modniir Ulgoth', 'Harathi Hinterlands', '45 ~ 55', 8),
-    WorldBossInfo('Shadow Behemonth', 'Queensdale', '1 ~ 15', 9),
-    WorldBossInfo('Golem Mark II', 'Mount Maelstrom', '60 ~ 70', 10),
-    WorldBossInfo('Karka Queen', 'Southsun Cove', '80', 11),
-    WorldBossInfo('Claw of Jormag', 'Frostgorge Sound', '70 ~ 80', 12)
+    WorldBossInfo('Taidha Covington', 'Bloodtide Coast', '45 ~ 55', 0, false),
+    WorldBossInfo('Tequatl', 'Sparkfly Fen', '55 ~ 65', 1, true),
+    WorldBossInfo('Svanir Shaman', 'Wayfarer Foothills', '1 ~ 15', 2, false),
+    WorldBossInfo('Megadestroyer', 'Bloodtide Coast', '60 ~ 70', 3, false),
+    WorldBossInfo('Fire Elemental', 'Mount Maelstrom', '1 ~ 15', 4, false),
+    WorldBossInfo('Shatterer', 'Blazeridge Steppes', '45 ~ 55', 5, false),
+    WorldBossInfo('Evolved Jungle Wurm', 'Bloodtide Coast', '45 ~ 55', 6, true),
+    WorldBossInfo('Jungle Wurm', 'Caledon Forest', '1 ~ 15', 7, false),
+    WorldBossInfo('Modniir Ulgoth', 'Harathi Hinterlands', '45 ~ 55', 8, false),
+    WorldBossInfo('Shadow Behemonth', 'Queensdale', '1 ~ 15', 9, false),
+    WorldBossInfo('Golem Mark II', 'Mount Maelstrom', '60 ~ 70', 10, false),
+    WorldBossInfo('Karka Queen', 'Southsun Cove', '80', 11, true),
+    WorldBossInfo('Claw of Jormag', 'Frostgorge Sound', '70 ~ 80', 12, false)
   ];
 
   static final List<List<int>> worldBossListTime = [
     [1,5], // 0:00
-    [1,5], // 0:15
-    [1,5], // 0:30
-    [1,5], // 0:45
-    [1,5], // 1:00
-    [1,5], // 1:15
-    [1,5], // 1:30
-    [1,5], // 1:45
-    [1,5], // 2:00
-    [1,5], // 2:15
-    [1,5], // 2:30
-    [1,5], // 2:45
+    [2], // 0:15
+    [8], // 0:30
+    [4], // 0:45
+    [6,10], // 1:00
+    [7], // 1:15
+    [12], // 1:30
+    [9], // 1:45
+    [0,11], // 2:00
+    [2], // 2:15
+    [3], // 2:30
+    [4], // 2:45
     [1,5], // 3:00
-    [1,5], // 3:15
-    [1,5], // 3:30
-    [1,5], // 3:45
-    [1,5], // 4:00
-    [1,5], // 4:15
-    [1,5], // 4:30
-    [1,5], // 4:45
-    [1,5], // 5:00
-    [1,5], // 5:15
-    [1,5], // 5:30
-    [1,5], // 5:45
-    [1,5], // 6:00
-    [1,5], // 6:15
-    [1,5], // 6:30
-    [1,5], // 6:45
-    [1,5], // 7:00
-    [1,5], // 7:15
-    [1,5], // 7:30
-    [1,5], // 7:45
-    [1,5], // 8:00
-    [1,5], // 8:15
-    [1,5], // 8:30
-    [1,5], // 8:45
-    [1,5], // 9:00
-    [1,5], // 9:15
-    [1,5], // 9:30
-    [1,5], // 9:45
-    [1,5], // 10:00
-    [1,5], // 10:15
-    [1,5], // 10:30
-    [1,5], // 10:45
-    [1,5], // 11:00
-    [1,5], // 11:15
-    [1,5], // 11:30
-    [1,5], // 11:45
-    [1,5], // 12:00
-    [1,5], // 12:15
-    [1,5], // 12:30
-    [1,5], // 12:45
-    [1,5], // 13:00
-    [1,5], // 13:15
-    [1,5], // 13:30
-    [1,5], // 13:45
-    [1,5], // 14:00
-    [1,5], // 14:15
-    [1,5], // 14:30
-    [1,5], // 14:45
+    [7], // 3:15
+    [8], // 3:30
+    [9], // 3:45
+    [6,10], // 4:00
+    [2], // 4:15
+    [12], // 4:30
+    [4], // 4:45
+    [0], // 5:00
+    [7], // 5:15
+    [3], // 5:30
+    [9], // 5:45
+    [5], // 6:00
+    [2], // 6:15
+    [8], // 6:30
+    [4], // 6:45
+    [10,11], // 7:00
+    [7], // 7:15
+    [12], // 7:30
+    [9], // 7:45
+    [0,1], // 8:00
+    [2], // 8:15
+    [3], // 8:30
+    [4], // 8:45
+    [5,6], // 9:00
+    [7], // 9:15
+    [8], // 9:30
+    [9], // 9:45
+    [10,11], // 10:00
+    [2], // 10:15
+    [12], // 10:30
+    [4], // 10:45
+    [0,1], // 11:00
+    [7], // 11:15
+    [3], // 11:30
+    [9], // 11:45
+    [5,6], // 12:00
+    [2], // 12:15
+    [8], // 12:30
+    [4], // 12:45
+    [10], // 13:00
+    [7], // 13:15
+    [12], // 13:30
+    [9], // 13:45
+    [0,11], // 14:00
+    [2], // 14:15
+    [3], // 14:30
+    [4], // 14:45
     [1,5], // 15:00
-    [1,5], // 15:15
-    [1,5], // 15:30
-    [1,5], // 15:45
-    [1,5], // 16:00
-    [1,5], // 16:15
-    [1,5], // 16:30
-    [1,5], // 16:45
-    [1,5], // 17:00
-    [1,5], // 17:15
-    [1,5], // 17:30
-    [1,5], // 17:45
-    [1,5], // 1:00
-    [1,5], // 1:15
-    [1,5], // 1:30
-    [1,5], // 1:45
-    [1,5], // 1:00
-    [1,5], // 1:15
-    [1,5], // 1:30
-    [1,5], // 1:45
-    [1,5], // 1:00
-    [1,5], // 1:15
-    [1,5], // 1:30
-    [1,5], // 1:45
-    [1,5], // 1:00
-    [1,5], // 1:15
-    [1,5], // 1:30
-    [1,5], // 1:45
-    [1,5], // 1:00
-    [1,5], // 1:15
-    [1,5], // 1:30
-    [1,5], // 1:45
-    [1,5], // 1:00
-    [1,5], // 1:15
-    [1,5], // 1:30
-    [1,5], // 1:45
+    [7], // 15:15
+    [8], // 15:30
+    [9], // 15:45
+    [6,10], // 16:00
+    [2], // 16:15
+    [12], // 16:30
+    [4], // 16:45
+    [0], // 17:00
+    [7], // 17:15
+    [3], // 17:30
+    [9], // 17:45
+    [5], // 18:00
+    [2], // 18:15
+    [8,11], // 18:30
+    [4], // 18:45
+    [10], // 19:00
+    [7], // 19:15
+    [1,12], // 19:30
+    [9], // 19:45
+    [0], // 20:00
+    [2], // 20:15
+    [3,6], // 20:30
+    [4], // 20:45
+    [5], // 21:00
+    [7], // 21:15
+    [8], // 21:30
+    [9], // 21:45
+    [10], // 22:00
+    [2], // 22:15
+    [12], // 22:30
+    [4], // 22:45
+    [0,11], // 23:00
+    [7], // 23:15
+    [3], // 23:30
+    [9], // 23:45
 
   ];
+
+  static int getIndexByNow(){
+    final dateTime = new DateTime.now();
+    final hour = dateTime.hour;
+    final minute = dateTime.minute;
+
+    //final index = hour * 4 + minute%15;
+
+    return (hour * 4) + (minute%15);
+  }
+
+
 
 } // end class WorldBossStaticData
