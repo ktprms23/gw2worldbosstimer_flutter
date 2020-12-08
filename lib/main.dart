@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'bossinfo.dart';
 
@@ -57,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<WorldBossInfo> currentList;
   List<WorldBossInfo> nextList;
+  int currentIndex;
 
   void _incrementCounter() {
     setState(() {
@@ -79,6 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
 
     refreshWorldBossesList();
+    Widget w = buildBossList(currentList);
+    log('${nextList.length}');
 /*
     List<Widget> list = [Text('Current Boss',)];
     list.add(buildBossList(currentList));
@@ -112,10 +117,39 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children:
           [
-            Text('Current Boss',),
-            buildBossList(currentList),
-            Text('Next Boss',),
-            buildBossList(nextList)
+            ListTile(
+              title:
+                Center(
+                  child:
+                  Text('Current Boss',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                        backgroundColor: Colors.black,
+                    ),
+                  ),
+                ),
+            ),
+//Expanded(child: w),
+            w,
+            //buildBossList(currentList),
+            ListTile(
+              title:
+                  Center(
+                    child:
+                    Text('Next Boss',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        backgroundColor: Colors.black,
+                      ),
+                    ),
+                  )
+            ),
+            Expanded(child: buildBossList(nextList))
+
 
         ],
         ),
@@ -127,36 +161,86 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget buildBossList(List<WorldBossInfo> bossInfos) {
 
     List<Widget> rows = new List<Widget>();
-
+/*
+    if( bossInfos.length <= 2 ) {
+      rows.add(Text(
+        'Current Boss',
+        style: TextStyle(
+            fontWeight: FontWeight.bold
+        ),
+      ));
+    } else {
+      rows.add(Text(
+        'Next Boss',
+        style: TextStyle(
+            fontWeight: FontWeight.bold
+        ),
+      ));
+    } // end if
+*/
     for( int i = 0; i < bossInfos.length; i++ ) {
-      rows.add(buildListRow(bossInfos[i]));
+      rows.add(buildListRow(bossInfos[i], i));
     } // end for
+    //return rows;
+    return ListView(children: rows,shrinkWrap: true);
 
-    return ListView(children: rows,);
-
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          //if (i.isOdd) return Divider(); /*2*/
-
-          //final index = i ~/ 2; /*3*/
-          if (i >= bossInfos.length) {
-            return null;
-            //_suggestions.add(generateWordPairs()); /*4*/
-          }
-          return buildListRow(bossInfos[i]);
-        });
 
   }
 
-  Widget buildListRow( WorldBossInfo bossInfo ) {
+
+
+  Widget buildListRow( WorldBossInfo bossInfo, int listIndex ) {
+
+    if( listIndex + currentIndex >= WorldBossStaticData.worldBossListTime.length ) {
+      listIndex = listIndex + currentIndex - WorldBossStaticData.worldBossListTime.length;
+    } else {
+      listIndex = listIndex + currentIndex;
+    } // end if
+
+    int hour = (listIndex / 4).round();
+    int tmp = (listIndex- 4*hour) % 15;
+    int minuteIndex;// = listIndex % 4;
+    switch(tmp) {
+      case 0:
+        minuteIndex = 0;
+        break;
+      case 1:
+        minuteIndex = 15;
+        break;
+      case 2:
+        minuteIndex = 30;
+        break;
+      case 3:
+
+        minuteIndex = 45;
+        break;
+      default:
+        minuteIndex = 0;
+    } // end switch
+
     return ListTile(
       leading:
       Icon(
         Icons.add
       ),
       title:
-      Text(bossInfo.bossName),
+          Row(
+            children: [
+              Text(
+                '$hour:$minuteIndex  ',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                bossInfo.bossName,
+                style: TextStyle(
+                  color: bossInfo.hardCore ? Colors.red : Colors.black,
+                ),
+              ),
+            ],
+          ),
+
       subtitle:
       Text("${bossInfo.bossMap}  Map Level: ${bossInfo.bossLevel}"),
 
@@ -173,7 +257,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
     final index = WorldBossStaticData.getIndexByNow();
-
+    currentIndex = index;
+    log('[HHSK] debug current index: $currentIndex');
     final currentIndexList = WorldBossStaticData.worldBossListTime[index];
 
     currentList.add( WorldBossStaticData.worldBossDataList[currentIndexList[0]] );
