@@ -59,6 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<WorldBossInfo> currentList;
   List<WorldBossInfo> nextList;
+  String currentBossTime;
+  List<String> nextBossTime;
   int currentIndex;
 
   void _incrementCounter() {
@@ -82,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
 
     refreshWorldBossesList();
-    Widget w = buildBossList(currentList);
+    Widget w = buildBossList(currentList, true);
     log('${nextList.length}');
 /*
     List<Widget> list = [Text('Current Boss',)];
@@ -148,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   )
             ),
-            Expanded(child: buildBossList(nextList))
+            Expanded(child: buildBossList(nextList, false))
 
 
         ],
@@ -158,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildBossList(List<WorldBossInfo> bossInfos) {
+  Widget buildBossList(List<WorldBossInfo> bossInfos, bool current) {
 
     List<Widget> rows = new List<Widget>();
 /*
@@ -179,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } // end if
 */
     for( int i = 0; i < bossInfos.length; i++ ) {
-      rows.add(buildListRow(bossInfos[i], i));
+      rows.add(buildListRow(bossInfos[i], i, false));
     } // end for
     //return rows;
     return ListView(children: rows,shrinkWrap: true);
@@ -189,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-  Widget buildListRow( WorldBossInfo bossInfo, int listIndex ) {
+  Widget buildListRow( WorldBossInfo bossInfo, int listIndex, bool current ) {
 
     if( listIndex + currentIndex >= WorldBossStaticData.worldBossListTime.length ) {
       listIndex = listIndex + currentIndex - WorldBossStaticData.worldBossListTime.length;
@@ -197,26 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
       listIndex = listIndex + currentIndex;
     } // end if
 
-    int hour = (listIndex / 4).round();
-    int tmp = (listIndex- 4*hour) % 15;
-    int minuteIndex;// = listIndex % 4;
-    switch(tmp) {
-      case 0:
-        minuteIndex = 0;
-        break;
-      case 1:
-        minuteIndex = 15;
-        break;
-      case 2:
-        minuteIndex = 30;
-        break;
-      case 3:
 
-        minuteIndex = 45;
-        break;
-      default:
-        minuteIndex = 0;
-    } // end switch
 
     return ListTile(
       leading:
@@ -227,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             children: [
               Text(
-                '$hour:$minuteIndex  ',
+                '${ current ? currentBossTime : nextBossTime[listIndex] }    ',
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -255,9 +238,14 @@ class _MyHomePageState extends State<MyHomePage> {
     if( nextList == null ) nextList = new List<WorldBossInfo>();
     else nextList.clear();
 
+    if( nextBossTime == null ) nextBossTime = new List<String>();
+    else nextBossTime.clear();
+
 
     final index = WorldBossStaticData.getIndexByNow();
     currentIndex = index;
+    currentBossTime = WorldBossStaticData.listTime[currentIndex];
+
     log('[HHSK] debug current index: $currentIndex');
     final currentIndexList = WorldBossStaticData.worldBossListTime[index];
 
@@ -269,16 +257,20 @@ class _MyHomePageState extends State<MyHomePage> {
     for( var i = index + 1; i < WorldBossStaticData.worldBossListTime.length; i++ ) {
       final tmp = WorldBossStaticData.worldBossListTime[i];
       nextList.add( WorldBossStaticData.worldBossDataList[tmp[0]] );
+      nextBossTime.add(WorldBossStaticData.listTime[i]);
       if( tmp.length > 1 ) {
         nextList.add( WorldBossStaticData.worldBossDataList[tmp[1]] );
+        nextBossTime.add(WorldBossStaticData.listTime[i]);
       } // end if
     } // end for
 
     for( var i = 0; i < index; i++ ) {
       final tmp = WorldBossStaticData.worldBossListTime[i];
       nextList.add( WorldBossStaticData.worldBossDataList[tmp[0]] );
+      nextBossTime.add(WorldBossStaticData.listTime[i]);
       if( tmp.length > 1 ) {
         nextList.add( WorldBossStaticData.worldBossDataList[tmp[1]] );
+        nextBossTime.add(WorldBossStaticData.listTime[i]);
       } // end if
     } // end for
 
