@@ -2,15 +2,15 @@
 
 GW2Timer With Flutter
 
-## Getting Started
+Original version on google play:
+https://play.google.com/store/apps/details?id=com.cqtc.gw2worldbosstimer
 
-This project is a starting point for a Flutter application.
+A simple timer shows what time the world boss event starts.
 
-A few resources to get you started if this is your first Flutter project:
+The timer has two lists to point out which boss event is starting and what time the remainders will start.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+The displaying time will depend on your device's timezone
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+©2010–2020 ArenaNet, LLC. All rights reserved. Guild Wars, Guild Wars 2, Guild Wars 2: Heart of Thorns, ArenaNet, NCSOFT, the Interlocking NC Logo, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.
