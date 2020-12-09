@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'timezonetranslate.dart';
 class WorldBossInfo {
 
   final String bossName;
@@ -268,13 +269,13 @@ class WorldBossStaticData {
   static int getIndexByNow(){
     final dateTime = new DateTime.now();
 
-    final utcDateTime = new DateTime.utc(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute);
-    final hour = utcDateTime.hour;
-    final minute = utcDateTime.minute;
+    //final utcDateTime = new DateTime.utc(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute);
+    final hour = dateTime.hour;
+    final minute = dateTime.minute;
 
     log('[HHSK] DEBUG time: $hour:$minute');
     //final index = hour * 4 + minute%15;
 
-    return (hour * 4) + (minute ~/ 15);
+    return (TimeZoneTranslate.getTimeToOffset8(hour) * 4) + (minute ~/ 15);
   } // end method getIndexByNow
 } // end class WorldBossStaticData

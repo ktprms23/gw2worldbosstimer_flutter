@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gw2timerflutter/timezonetranslate.dart';
+import 'package:sprintf/sprintf.dart';
 import 'bossinfo.dart';
 
 
@@ -218,7 +220,8 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             children: [
               Text(
-                '${ current ? currentBossTime : nextBossTime[listIndex] }    ',
+                '${ current ? '${sprintf('%02d', [TimeZoneTranslate.getTimeFromOffset8(int.parse(currentBossTime.substring(0, 2)))])}:${currentBossTime.substring(3, 5)}' :
+                '${sprintf('%02d', [TimeZoneTranslate.getTimeFromOffset8(int.parse(nextBossTime[listIndex].substring(0, 2)))])}:${nextBossTime[listIndex].substring(3, 5)}' }    ',
                 style: TextStyle(
                   color: Colors.black,
                 ),
