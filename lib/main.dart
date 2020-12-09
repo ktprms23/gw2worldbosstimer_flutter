@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Time to fight GW2 Boss'),
     );
   }
 }
@@ -85,7 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     refreshWorldBossesList();
     Widget w = buildBossList(currentList, true);
-    log('${nextList.length}');
+    //log('${nextList.length}');
+    //log('Boss List time: ${WorldBossStaticData.worldBossListTime.length}');
+    //log('List time: ${WorldBossStaticData.listTime.length}');
 /*
     List<Widget> list = [Text('Current Boss',)];
     list.add(buildBossList(currentList));
@@ -123,14 +125,20 @@ class _MyHomePageState extends State<MyHomePage> {
               title:
                 Center(
                   child:
-                  Text('Current Boss',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                        backgroundColor: Colors.black,
-                    ),
-                  ),
+                      Container(
+                        decoration: BoxDecoration(
+                        color: Colors.black
+                        ),
+                        child: Text('Current Boss',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                          backgroundColor: Colors.black,
+                        ),
+                      ),
+        )
+
                 ),
             ),
 //Expanded(child: w),
@@ -181,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } // end if
 */
     for( int i = 0; i < bossInfos.length; i++ ) {
-      rows.add(buildListRow(bossInfos[i], i, false));
+      rows.add(buildListRow(bossInfos[i], i, current));
     } // end for
     //return rows;
     return ListView(children: rows,shrinkWrap: true);
@@ -192,20 +200,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Widget buildListRow( WorldBossInfo bossInfo, int listIndex, bool current ) {
-
+/*
     if( listIndex + currentIndex >= WorldBossStaticData.worldBossListTime.length ) {
       listIndex = listIndex + currentIndex - WorldBossStaticData.worldBossListTime.length;
     } else {
       listIndex = listIndex + currentIndex;
     } // end if
 
-
+*/
 
     return ListTile(
       leading:
-      Icon(
-        Icons.add
-      ),
+          WorldBossStaticData.worldBossIcon[bossInfo.bossIconID] != null ?
+              WorldBossStaticData.worldBossIcon[bossInfo.bossIconID] :
+              WorldBossStaticData.worldBossIcon[WorldBossStaticData.worldBossIcon.length-1],
       title:
           Row(
             children: [
@@ -246,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
     currentIndex = index;
     currentBossTime = WorldBossStaticData.listTime[currentIndex];
 
-    log('[HHSK] debug current index: $currentIndex');
+    //log('[HHSK] debug current index: $currentIndex');
     final currentIndexList = WorldBossStaticData.worldBossListTime[index];
 
     currentList.add( WorldBossStaticData.worldBossDataList[currentIndexList[0]] );
@@ -255,6 +263,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } // end if
 
     for( var i = index + 1; i < WorldBossStaticData.worldBossListTime.length; i++ ) {
+
       final tmp = WorldBossStaticData.worldBossListTime[i];
       nextList.add( WorldBossStaticData.worldBossDataList[tmp[0]] );
       nextBossTime.add(WorldBossStaticData.listTime[i]);
@@ -262,7 +271,10 @@ class _MyHomePageState extends State<MyHomePage> {
         nextList.add( WorldBossStaticData.worldBossDataList[tmp[1]] );
         nextBossTime.add(WorldBossStaticData.listTime[i]);
       } // end if
+      //log('[HHSK] debug index: ${i} time: ${WorldBossStaticData.listTime[i]}');
     } // end for
+
+    //log('[HHSK] debug nextboss: ${i} time: ${WorldBossStaticData.listTime[i]}');
 
     for( var i = 0; i < index; i++ ) {
       final tmp = WorldBossStaticData.worldBossListTime[i];
@@ -272,10 +284,11 @@ class _MyHomePageState extends State<MyHomePage> {
         nextList.add( WorldBossStaticData.worldBossDataList[tmp[1]] );
         nextBossTime.add(WorldBossStaticData.listTime[i]);
       } // end if
+      //log('[HHSK] debug second index: ${i} time: ${WorldBossStaticData.listTime[i]}');
     } // end for
 
 
 
   } // end method refreshWorldBossesList
 
-}
+} // end class _MyHomePageState

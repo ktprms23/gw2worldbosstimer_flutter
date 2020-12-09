@@ -1,6 +1,4 @@
-
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 class WorldBossInfo {
 
@@ -12,7 +10,7 @@ class WorldBossInfo {
 
   WorldBossInfo(this.bossName, this.bossMap, this.bossLevel, this.bossIconID, this.hardCore );
 
-}
+} // end class WorldBossInfo
 
 ///
 ///     public final String [] ALL_BOSS_DATA = {
@@ -150,6 +148,7 @@ class WorldBossStaticData {
 
   ];
 
+  // TODO: Confirm the time is for UTC or CHT
   static final List<String> listTime = [
     '00:00',
     '00:15',
@@ -247,22 +246,35 @@ class WorldBossStaticData {
     '23:15',
     '23:30',
     '23:45',
+  ];
 
+  static List<Image> worldBossIcon = [
+    Image(image: AssetImage('assets/icons/taidha_covington_s.png')),
+    Image(image: AssetImage('assets/icons/teq.png')),
+    Image(image: AssetImage('assets/icons/svanir_shaman_s.png')),
+    Image(image: AssetImage('assets/icons/mega.png')),
+    Image(image: AssetImage('assets/icons/fire.png')),
+    Image(image: AssetImage('assets/icons/shatterer.png')),
+    Image(image: AssetImage('assets/icons/evolved_jungle_wurm.png')),
+    Image(image: AssetImage('assets/icons/wurm.png')),
+    Image(image: AssetImage('assets/icons/modniir.png')),
+    Image(image: AssetImage('assets/icons/sb.png')),
+    Image(image: AssetImage('assets/icons/golem.png')),
+    Image(image: AssetImage('assets/icons/karka.png')),
+    Image(image: AssetImage('assets/icons/jormag.png')),
+    Image(image: AssetImage('assets/icons/no_picture_s.png')),
   ];
 
   static int getIndexByNow(){
     final dateTime = new DateTime.now();
 
-    final utcDateTime = new DateTime.utc(dateTime.year, dateTime.month, dateTime.day);
+    final utcDateTime = new DateTime.utc(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute);
     final hour = utcDateTime.hour;
     final minute = utcDateTime.minute;
 
     log('[HHSK] DEBUG time: $hour:$minute');
     //final index = hour * 4 + minute%15;
 
-    return (hour * 4) + (minute/15).round();
-  }
-
-
-
+    return (hour * 4) + (minute ~/ 15);
+  } // end method getIndexByNow
 } // end class WorldBossStaticData
