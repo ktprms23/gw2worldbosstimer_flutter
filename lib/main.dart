@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -65,6 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> nextBossTime;
   int currentIndex;
 
+  ///
+  bool timerAlready = false;
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -75,6 +79,22 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+
+  
+  registerUpdateTimer() {
+    if(timerAlready) return;
+    timerAlready = true;
+
+    Timer.periodic(Duration(minutes: 1), (timer) {
+      setState(() {
+        log('[HHSK] debug repeat update. ${DateTime.now().hour}:${DateTime.now().minute}');
+      });
+
+    });
+
+  } // end method registerUpdateTimer
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     refreshWorldBossesList();
     Widget w = buildBossList(currentList, true);
+    //registerUpdateTimer();
+    Timer(Duration(minutes: 1), () {
+      setState(() {
+        log('[HHSK] debug repeat update. ${DateTime.now().hour}:${DateTime.now().minute}');
+      });
+
+    });
     //log('${nextList.length}');
     //log('Boss List time: ${WorldBossStaticData.worldBossListTime.length}');
     //log('List time: ${WorldBossStaticData.listTime.length}');
@@ -96,6 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
     list.add(Text('Next Boss',));
     list.add(buildBossList(nextList));
 */
+   // final dateTime = DateTime.now().minute~/15;
+
+
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
