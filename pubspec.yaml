@@ -83,3 +83,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: GW2Font
+      fonts:
+        - asset: assets/fonts/GWTwoFont1p1.ttf

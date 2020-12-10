@@ -28,11 +28,12 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        //  fontFamily: 'GW2Font'
       ),
       home: MyHomePage(title: 'Time to fight GW2 Boss'),
     );
@@ -66,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> nextBossTime;
   int currentIndex;
 
-  ///
+  /// no used
   bool timerAlready = false;
 
   void _incrementCounter() {
@@ -80,21 +81,26 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  
+
+  // no used.
   registerUpdateTimer() {
     if(timerAlready) return;
     timerAlready = true;
 
     Timer.periodic(Duration(minutes: 1), (timer) {
-      setState(() {
-        log('[HHSK] debug repeat update. ${DateTime.now().hour}:${DateTime.now().minute}');
-      });
+      if(mounted) {
+        setState(() {
+          log('[HHSK] debug repeat update. ${DateTime
+              .now()
+              .hour}:${DateTime
+              .now()
+              .minute}');
+        });
+      }
 
     });
 
   } // end method registerUpdateTimer
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +112,18 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
 
     refreshWorldBossesList();
-    Widget w = buildBossList(currentList, true);
+    //Widget w = buildBossList(currentList, true);
     //registerUpdateTimer();
     Timer(Duration(minutes: 1), () {
-      setState(() {
-        log('[HHSK] debug repeat update. ${DateTime.now().hour}:${DateTime.now().minute}');
-      });
+      if(mounted) {
+        setState(() {
+          log('[HHSK] debug repeat update. ${DateTime
+              .now()
+              .hour}:${DateTime
+              .now()
+              .minute}');
+        });
+      } // end if
 
     });
     //log('${nextList.length}');
@@ -160,38 +172,59 @@ class _MyHomePageState extends State<MyHomePage> {
                   child:
                       Container(
                         decoration: BoxDecoration(
-                        color: Colors.black
+                        color: Colors.black,
+
                         ),
-                        child: Text('Current Boss',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                          backgroundColor: Colors.black,
-                        ),
-                      ),
-        )
+                        child:
+                          Center(
+                            child:
+                              Text('Current Boss',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                  //backgroundColor: Colors.black,
+                                  fontFamily: 'GW2Font',
+                                ),
+                              ),
+                          )
+                      )
 
                 ),
             ),
 //Expanded(child: w),
-            w,
+            //w,
+            /// Current boss list
+            buildBossList(currentList, true),
             //buildBossList(currentList),
             ListTile(
               title:
                   Center(
                     child:
-                    Text('Next Boss',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        backgroundColor: Colors.black,
-                      ),
-                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+
+                        ),
+                        child:
+                        Center(
+                          child:
+                          Text('Next Boss',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              //backgroundColor: Colors.black,
+                              fontFamily: 'GW2Font',
+                            ),
+                          ),
+                        )
+                    )
                   )
             ),
-            Expanded(child: buildBossList(nextList, false))
+            /// next boss list
+            //buildBossList(nextList, false),
+            Expanded(child: buildBossList(nextList, false)),
 
 
         ],
@@ -261,13 +294,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 bossInfo.bossName,
                 style: TextStyle(
                   color: bossInfo.hardCore ? Colors.red : Colors.black,
+                  fontFamily: 'GW2Font',
                 ),
               ),
             ],
           ),
 
       subtitle:
-      Text("${bossInfo.bossMap}  Map Level: ${bossInfo.bossLevel}"),
+      Text("${bossInfo.bossMap}, Map Level: ${bossInfo.bossLevel}"),
 
     );
   }
