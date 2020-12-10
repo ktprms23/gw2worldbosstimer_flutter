@@ -1,6 +1,6 @@
 # gw2timerflutter
 
-GW2Timer With Flutter
+GW2Timer With Flutter on Android and iOS
 
 Original version on google play:
 https://play.google.com/store/apps/details?id=com.cqtc.gw2worldbosstimer
